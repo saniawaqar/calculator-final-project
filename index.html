@@ -17,7 +17,7 @@
             align-items: center;
             width: 100%;
             height: 100vh;
-            background: #e3f9ff;
+            background: #d5d9da;
         }
         .calculator{
             background: #3a4452;
@@ -43,83 +43,82 @@
         
 
        }
+       .calculator form input:hover{
+         box-shadow:0 0 18px rgba(255, 255, 255, 0.473) ;
+         transform: translateY(-1px);
 
-       form .display {
+       }
+
+       form #display {
         
          display: flex;
-         justify-content: flex-end;
+         width:100%;
+         justify-content: center;
          color: white;
          margin: 20px 0;
+         text-align: right;
+         flex: 1;
+         font-size: 30px;
+         padding: 0 8px ;
         
 
        }
-       form .display input{
-        text-align: right;
-        /* flex:1 to grow input field to full width  */
-        flex: 1;
-        font-size: 44px;
-        padding: 0 10px;
-       }
-        form input.equal{
-        width: 149px;
-        background: orange;
-       }
-       form input.operator{
-        color: aquamarine;
-       }
- 
-        
+       form input.equal {
+        width: 170px;
+        font-size: 30px;
+        color:rgb(248, 192, 6) ;
        
-       
-
         
-
-
-
-
-
-
-    </style>
+       }
+        form input.operator{
+        background: rgb(247, 148, 0);
+        font-size: 30px;
+        color: white;
+       }
+       form input.featurebtn{
+        color:rgb(248, 192, 6);
+     }
+       </style>
 </head>
+
 <body>
    
     <section class="container">
         <div class="calculator"> 
             <form action="">
-                 <!-- ---calculator display---- -->
-        <div class="display">
-        <input type="text" name="display"  placeholder="0" readonly >
-        </div>
-        
-       
+                 <!-- ---calculator display------>
+     
+        <input type="text" name="display"  placeholder="0" readonly id="display">
+      
             <div>
-            <input type="reset" value="AC" onclick="display.value = ''" class="operator">
-            <input type="button" value="DE" onclick="display.value = display.value.toString().slice(0,-1)" class="operator">
-            <input type="button" value="." onclick="display.value += '*'" class="operator">
-            <input type="button" value="/" onclick="display.value += '/'" class="operator">
+            <input type="reset" value="AC" onclick="clearDisplay()" class="featurebtn">
+            <input type="button" value="DE" onclick="deleteLast()" class="featurebtn">
+            <input type="button" value="." onclick="addValue(this.value)" class="featurebtn">
+            <input type="button" value="/" onclick="addValue(this.value)" class="operator">
             </div>
              <div>
-            <input type="button" value="7" onclick="display.value += '7'">
-            <input type="button" value="8" onclick="display.value += '8'">
-            <input type="button" value="9" onclick="display.value += '9'">
-            <input type="button" value="*" onclick="display.value += '*'" class="operator">
+               <!-- //or this would work same if you use---appendng value directly  onclick="display.value += '7'" --> 
+            <input type="button" value="7" onclick="addValue(this.value)">  
+            <input type="button" value="8" onclick="addValue(this.value)">
+            <input type="button" value="9" onclick="addValue(this.value)">
+            <input type="button" value="*" onclick="addValue(this.value)" class="operator">
             </div>
              <div>
-            <input type="button" value="4" onclick="display.value += '4'">
-            <input type="button" value="5" onclick="display.value += '5'">
-            <input type="button" value="6" onclick="display.value += '6'">
-            <input type="button" value="-" onclick="display.value += '-'" class="operator">
+            <input type="button" value="4" onclick="addValue(this.value)">
+            <input type="button" value="5" onclick="addValue(this.value)">
+            <input type="button" value="6" onclick="addValue(this.value)">
+            <input type="button" value="-" onclick="addValue(this.value)" class="operator">
             </div>
              <div>
-            <input type="button" value="1" onclick="display.value += '1'">
-            <input type="button" value="2" onclick="display.value += '2'">
-            <input type="button" value="3" onclick="display.value += '3'">
-            <input type="button" value="+" onclick="display.value += '+'" class="operator">
+            <input type="button" value="1" onclick="addValue(this.value)">
+            <input type="button" value="2" onclick="addValue(this.value)">
+            <input type="button" value="3" onclick="addValue(this.value)">
+            <input type="button" value="+" onclick="addValue(this.value)" class="operator">
             </div>
              <div>
-            <input type="button" value="00" onclick="display.value += '00'">
-            <input type="button" value="0" onclick="display.value += '0'">
-            <input type="button" value="="  class="equal" onclick="display .value = eval(display.value)">
+            <input type="button" value="00" onclick="addValue(this.value)">
+            <input type="button" value="0" onclick="addValue(this.value)">
+            <input type="button" value="="  class="equal" onclick="calculate()">
             </div>
         
 
@@ -127,41 +126,77 @@
      </div>
     </section>
 
-   
-   
-<!--       
+   <script>
+ // this will append numbers(given parameter in onclick this.value) 
+    const display= document.getElementById("display");
+
+    const addValue = (num) => 
+    {display.value+= num;
+    };
+    
+//clears the input field
+    const clearDisplay = () => {
+    display.value = "";
+    };
+
+//delete the last number 
+    const deleteLast = () => {
+    display.value = display.value.slice(0, -1);
+    };
 
     
-    <script>
-        function add(){
-            let a = parseFloat(document.getElementById("num1").value);
-            let b = parseFloat(document.getElementById("num2").value);
-            document.getElementById("result").innerText = a + b;
-        }
-
-          function subtract(){
-            let a = parseFloat(document.getElementById("num1").value);
-            let b = parseFloat(document.getElementById("num2").value);
-            document.getElementById("result").innerText = a - b;
-        }
-          function multiply(){
-            let a = parseFloat(document.getElementById("num1").value);
-            let b = parseFloat(document.getElementById("num2").value);
-            document.getElementById("result").innerText = a * b;
-        }
-          function divide(){
-            let a = parseFloat(document.getElementById("num1").value);
-            let b = parseFloat(document.getElementById("num2").value);
-            document.getElementById("result").innerText = a / b;
-        }  -->
-      
-        
-
-
-
-
-
-
+    // after appending values in form of strngs into display
+    // we will create a function for =
+    // first create 3 varaibles ,,, tell the function that we have these operators 
+    //  then we will get the string value from display 
+    // and apply string method to split and turn them to array ["27","3"]  
+    //  we convert them into array and inserted operator using split so that it can be used as parts to add subtract and so last result ["27"(operator)"3"]
+    // run switch case 
     
-</body>
+
+  const calculate = () =>{
+   let expression= display.value;
+   let operator;
+   let result;
+
+   if(expression.includes("+"))operator = "+";
+   else if (expression.includes("-")) operator = "-"; 
+   else if (expression.includes("*")) operator = "*"; 
+   else if (expression.includes("/")) operator = "/";
+
+   let parts= expression.split(operator);
+   let num1= Number(parts[0]);
+   let num2 = Number(parts[1]);
+
+   switch(operator){
+    case"+":
+    result = num1 + num2;
+    break;
+
+    case "-": 
+    result = num1 - num2; 
+    break; 
+
+    case "*": 
+    result = num1 * num2; 
+    break; 
+    
+
+    case "/":
+        if(num2===0){
+        display.value="error";
+        return; }
+     result = num1/ num2;
+     break;
+   }
+
+   display.value= result;
+
+
+
+  }
+  
+  </script>
+   
+     </body>
 </html>
